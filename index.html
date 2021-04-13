@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body style="text-align:center;padding:200px;">
+
+<canvas class="container" style="width:500px;height:500px;padding:0;margin:0;"></canvas>
+
+<h1 id='1'></h1>
+<h1 id='2'></h1>
+
+</body>
+<script>
+
+var div = document.getElementsByClassName('container')[0];
+
+div.height='500';
+div.width='500';
+
+var ctx = div.getContext('2d');
+
+ctx.beginPath();
+ctx.fillStyle='#181818';
+ctx.arc(250,250,250,0,2*Math.PI);
+ctx.rect(0, 0, 500, 500);
+ctx.stroke();
+
+total = 0;
+circle = 0;
+setInterval(() => {
+    var x = (Math.floor(Math.random()*500)+1);
+    var y = (Math.floor(Math.random()*500)+1);
+    ctx.rect(x,y,1,1);
+    total++;
+    ctx.stroke();
+
+    if((Math.sqrt(x*x + y*y)) < 500){
+        circle++;
+    }
+
+}, 1);
+
+document.getElementById('1').innerHTML=Math.PI;
+
+setInterval(() => {
+    var pi = 4 * (circle/total);
+    console.log(pi);
+    document.getElementById('2').innerHTML=pi;
+}, 100);
+
+</script>
+</html>
