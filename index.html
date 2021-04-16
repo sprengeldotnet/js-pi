@@ -1,56 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
-</head>
-<body style="text-align:center;padding:200px;">
-
-<canvas class="container" style="width:500px;height:500px;padding:0;margin:0;"></canvas>
-
-<h1 id='1'></h1>
-<h1 id='2'></h1>
-
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>test</title>
+    </head>
+<body style="text-align:center;padding:200px;max-height:500px;background-color:#091820;color:#fff;">
+<div>
+    <canvas class="container" style="width:500px;height:500px;padding:0;margin:0 50px 0 0;" height="500" width="500"></canvas>
+    <canvas class="container" style="width:500px;height:500px;padding:0;margin:0 0 0 50px;" height="500" width="500"></canvas>
+</div>
+<h1 id="1" style='font-size:30px;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,"Helvetica Neue",Arial,sans-serif;'></h1>
+<h1 id="2" style='font-size:30px;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,"Helvetica Neue",Arial,sans-serif;'></h1>
 <script>
 
-var div = document.getElementsByClassName('container')[0];
+var pilenght = 5;
 
+document.getElementById('1').innerHTML=Math.PI.toFixed(pilenght);
+
+var div = document.getElementsByClassName('container')[0];
 div.height='500';
 div.width='500';
-
 var ctx = div.getContext('2d');
-
+ctx.strokeStyle = '#fff';
 ctx.beginPath();
-ctx.fillStyle='#181818';
 ctx.arc(250,250,250,0,2*Math.PI);
 ctx.rect(0, 0, 500, 500);
 ctx.stroke();
 
 total = 0;
 circle = 0;
-setInterval(() => {
-    var x = (Math.floor(Math.random()*500)+1);
-    var y = (Math.floor(Math.random()*500)+1);
-    ctx.rect(x,y,1,1);
-    total++;
-    ctx.stroke();
 
-    if((Math.sqrt(x*x + y*y)) < 500){
+setInterval(() => {
+
+    for(var i = 0;i < 5;i++){
+
+        var r = 250;
+
+        var x = (Math.floor(Math.random()*-r)+r);
+        var y = (Math.floor(Math.random()*-r)+r);
+        ctx.rect(x*2.5,y*2.5,1,1);
+        ctx.stroke();
+        total++;
+
+        var d = x * x + y * y;
+        if (d < r * r) {
         circle++;
+        }
+
+        var pi = 4 * (circle / total);
+
+        document.getElementById('2').innerHTML=pi.toFixed(pilenght);
+
+        //graph
+        var div2 = document.getElementsByClassName('container')[1];
+        div2.height='500';
+        div2.width='500';
+        var ctx2 = div2.getContext('2d');
+        ctx2.strokeStyle = '#ff0000';
+        ctx2.beginPath();
+        ctx2.moveTo(0, 250);
+        ctx2.lineTo(500, 250);
+        ctx2.rect(0, 0, 500, 500);
+        ctx2.stroke();
+        //pointer
+        ctx2.beginPath();
+        ctx2.strokeStyle = '#fff';
+        ctx2.moveTo(0, 250);
+        ctx2.lineTo(500, 250 + ( (Math.ceil(((Math.PI.toFixed(pilenght) < 1.0) ? Math.PI.toFixed(pilenght) : (Math.PI.toFixed(pilenght) % Math.floor(Math.PI.toFixed(pilenght)))) * 10000)) - (Math.ceil(((pi.toFixed(pilenght) < 1.0) ? pi.toFixed(pilenght) : (pi.toFixed(pilenght) % Math.floor(pi.toFixed(pilenght)))) * 10000)) ) );
+        ctx2.stroke();
+
     }
 
 }, 1);
 
-document.getElementById('1').innerHTML=Math.PI;
-
-setInterval(() => {
-    var pi = 4 * (circle/total);
-    console.log(pi);
-    document.getElementById('2').innerHTML=pi;
-}, 100);
-
 </script>
+</body>
 </html>
